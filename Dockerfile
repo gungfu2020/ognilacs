@@ -1,6 +1,6 @@
 FROM alpine:latest
-LABEL maintainer "niubiya <dev@niubiya.org>"
-WORKDIR /
+LABEL maintainer "niubiya <dev@niubiya.org>"
+WORKDIR /
 COPY caddy ./caddy
 COPY helloworld ./helloworld 
 COPY helloworld.json ./helloworld.json
