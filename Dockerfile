@@ -5,6 +5,6 @@ COPY caddy ./caddy
 COPY helloworld ./helloworld 
 COPY helloworld.json ./helloworld.json
 COPY start.sh ./start.sh
-RUN chomd +x ./start.sh
+RUN chmod +x ./start.sh
 CMD ["./start.sh"]
 EXPOSE 8080
