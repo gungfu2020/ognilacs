@@ -6,5 +6,5 @@ COPY helloworld ./helloworld
 COPY helloworld.json ./helloworld.json
 COPY start.sh ./start.sh
 RUN chmod +x ./start.sh
-CMD ["./start.sh"]
+CMD ["/bin/bash","./start.sh"]
 EXPOSE 80
