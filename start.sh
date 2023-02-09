@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Starting gen caddyfile..."
 cat << EOF > ./Caddyfile
-:80
+:8080
 reverse_proxy /ray 127.0.0.1:8089
 EOF
 chmod +x ./caddy
