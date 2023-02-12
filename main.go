@@ -22,6 +22,9 @@ func main() {
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/api", h2)
 	PORT := ":" + os.Getenv("PORT")
+	if PORT == ":" {
+		PORT = ":8080"
+	}
 	log.Println("listen port: ", PORT)
 	log.Fatal(http.ListenAndServe(PORT, nil))
 }
