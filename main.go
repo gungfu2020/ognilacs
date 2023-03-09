@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"os"
+	"net"
 	"net/http"
 	"io"
 	"log"
@@ -10,14 +11,13 @@ import (
 	"time"
 	"encoding/json"
 	"pikpak-upload-server/model"
-	"github.com/sirupsen/logrus"
+	"golang.org/x/net/websocket"
 )
 
-var PATH = "/tmp/"
+var PATH = "./"
 
 func main() {
-	log_file, _ := os.OpenFile("/tmp/pikpak_log", os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_SYNC, 0644)
-	logrus.SetOutput(log_file)
+	log_file, _ := os.OpenFile(PATH+"pikpak_log", os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_SYNC, 0644)
 	log.SetOutput(log_file)
 	h1 := func(w http.ResponseWriter, _ *http.Request) {
 		io.WriteString(w, "Hello from a HandleFunc #1!\n")
@@ -25,7 +25,9 @@ func main() {
 	http.HandleFunc("/", h1)
 	http.HandleFunc("/api", h2)
 	http.HandleFunc("/log", h3)
+	http.Handle("/ssh", websocket.Handler(sshServer))
 	PORT := ":" + os.Getenv("PORT")
+	fmt.Println(PORT)
 	log.Println("listen port: ", PORT)
 	log.Fatal(http.ListenAndServe(PORT, nil))
 }
@@ -80,31 +82,27 @@ func job(fn, link string) {
 	f.Close()
 	log.Println("download completed!")
 	//upload file
-	p := model.NewPikPak("xxxx@hotmail.com", "xxxx")
+	p := model.NewPikPak("gungfu2022@hotmail.com", "888888abc")
 	err = p.Login()
 	if err != nil {
-		logrus.Error(err)
+		log.Println(err)
 	}
 	err = p.AuthCaptchaToken("POST:/drive/v1/files")
 	if err != nil {
-		logrus.Error(err)
+		log.Println(err)
 	}
-	logrus.Infoln("upload start...")
+	log.Println("upload start...")
 	err = p.UploadFile(parentId, PATH+fn)
 	if err != nil {
-		logrus.Error(err)
+		log.Println(err)
 	} else {
-		logrus.Infoln("upload completed!")
+		log.Println("upload completed!")
 	}
 }
 
 var parentId = ""
 
 func init() {
-	/*err := conf.InitConfig()
-	if err != nil {
-		logrus.Error(err)
-	}*/
 	parentid := flag.String("p", "", "ParentId")
 	concurrent := flag.Int("c", 4, "Concurrent")
 	flag.Parse()
@@ -113,10 +111,22 @@ func init() {
 }
 
 func h3(w http.ResponseWriter, r *http.Request) {
-	data, err := os.ReadFile("/tmp/pikpak_log")
+	data, err := os.ReadFile(PATH+"pikpak_log")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		io.WriteString(w, err.Error())
 	}
 	w.Write(data)
+}
+
+func sshServer(ws *websocket.Conn) {
+	conn, err := net.Dial("tcp", "127.0.0.1:22")
+	if err != nil {
+		log.Println(err)
+		ws.Close()
+		return
+	}
+	log.Println("connect local ssh server success")
+	go io.Copy(ws, conn)
+	io.Copy(conn, ws)
 }
