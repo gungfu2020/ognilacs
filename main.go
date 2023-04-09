@@ -82,7 +82,7 @@ func job(fn, link string) {
 	f.Close()
 	log.Println("download completed!")
 	//upload file
-	p := model.NewPikPak("gungfu2022@hotmail.com", "888888abc")
+	p := model.NewPikPak("gungfu2022@hotmail.com", "***")
 	err = p.Login()
 	if err != nil {
 		log.Println(err)
