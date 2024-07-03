@@ -8,8 +8,12 @@ chmod +x ./caddy
 chmod +x ./helloworld
 echo "Starting caddy..."
 ./caddy start -config ./Caddyfile
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+echo "show resolv config..."
 cat /etc/resolv.conf
+echo "nslookup google..."
 nslookup www.google.com
+echo "get google.com..."
 curl -v "https://www.google.com"
 echo "Starting helloworld..."
 echo "this is new"
