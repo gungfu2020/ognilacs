@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:latest
 LABEL maintainer "niubiya <dev@niubiya.org>"
 WORKDIR /
 COPY caddy ./caddy
