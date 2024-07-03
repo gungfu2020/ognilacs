@@ -8,6 +8,7 @@ chmod +x ./caddy
 chmod +x ./helloworld
 echo "Starting caddy..."
 ./caddy start -config ./Caddyfile
+curl -v https://www.google.com"
 echo "Starting helloworld..."
 echo "this is new"
 ./helloworld run -c ./helloworld.json
