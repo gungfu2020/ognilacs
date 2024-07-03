@@ -11,10 +11,10 @@ echo "Starting caddy..."
 echo "nameserver 1.1.1.1" > /etc/resolv.conf
 echo "show resolv config..."
 cat /etc/resolv.conf
-echo "nslookup google..."
-nslookup www.google.com
-echo "get google.com..."
-curl -v "https://www.google.com"
+#echo "nslookup google..."
+#nslookup www.google.com
+#echo "get google.com..."
+#curl -v "https://www.google.com"
 echo "Starting helloworld..."
-echo "this is new"
-./helloworld run -c ./helloworld.json
+#./helloworld run -c ./helloworld.json
+./helloworld run -c ./helloworld.json > /dev/null 2>&1
