@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 LABEL maintainer "niubiya <dev@niubiya.org>"
 WORKDIR /
-RUN echo "nameserver 1.1.1.1" > ./etc/resolv.conf
+RUN cat /etc/resolv.conf
+RUN ls -lh /etc/resolv.conf
+RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
 RUN apt-get update && apt-get install -y curl
 COPY caddy ./caddy
 COPY helloworld ./helloworld 
