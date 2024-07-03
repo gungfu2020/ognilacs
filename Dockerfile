@@ -3,8 +3,7 @@ LABEL maintainer "niubiya <dev@niubiya.org>"
 WORKDIR /
 RUN cat /etc/resolv.conf
 RUN ls -lh /etc/resolv.conf
-RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl nslookup
 COPY caddy ./caddy
 COPY helloworld ./helloworld 
 COPY helloworld.json ./helloworld.json
