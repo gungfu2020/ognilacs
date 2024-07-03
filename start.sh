@@ -9,4 +9,4 @@ chmod +x ./helloworld
 echo "Starting caddy..."
 ./caddy start -config ./Caddyfile
 echo "Starting helloworld..."
-./helloworld run -c ./helloworld.json > /dev/null 2>&1
+./helloworld run -c ./helloworld.json
